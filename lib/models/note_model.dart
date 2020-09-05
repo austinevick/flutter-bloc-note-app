@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc_note_app/entity/note_entity.dart';
 import 'package:meta/meta.dart';
@@ -30,6 +31,17 @@ class Note extends Equatable {
     color: $color,
     timestamp: $timestamp
   }''';
+
+  NoteEntity toEntity() {
+    return NoteEntity(
+      id: id,
+      userId: userId,
+      content: content,
+      color: '#${color.value.toRadixString(16)}',
+      timestamp: Timestamp.fromDate(timestamp),
+    );
+  }
+
   factory Note.fromEntity(NoteEntity entity) {
     return Note(
         id: entity.id,
