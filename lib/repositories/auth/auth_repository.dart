@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc_note_app/config/paths.dart';
 import 'package:flutter_bloc_note_app/entity/entities.dart';
 import 'package:flutter_bloc_note_app/models/user_model.dart';
@@ -32,6 +33,21 @@ class AuthRepository extends BaseAuthRepository {
   }
 
   @override
+  Future<User> signupWithEmailAndPassword(
+      {@required String email, @required String password}) async {
+    final currentUser = await _firebaseAuth.currentUser();
+    final authCredential =
+        EmailAuthProvider.getCredential(email: email, password: password);
+    final authResult = await currentUser.linkWithCredential(authCredential);
+    final user = await _firebaseUserToUser(authResult.user);
+    _firestore
+        .collection(Paths.users)
+        .document(user.id)
+        .setData(user.toEntity().toDocument());
+    return user;
+  }
+
+  @override
   Future<User> getCurrentUser() {}
 
   @override
@@ -42,7 +58,4 @@ class AuthRepository extends BaseAuthRepository {
 
   @override
   Future<User> logout() {}
-
-  @override
-  Future<User> signupWithEmailAndPassword({String email, String password}) {}
 }
