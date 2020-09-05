@@ -56,11 +56,21 @@ class AuthRepository extends BaseAuthRepository {
   }
 
   @override
-  Future<User> getCurrentUser() {}
+  Future<User> logout() async {
+    await _firebaseAuth.signOut();
+    return await loginAnonymously();
+  }
 
   @override
-  Future<bool> isAnonymous() {}
+  Future<User> getCurrentUser() async {
+    final currentUser = await _firebaseAuth.currentUser();
+    if (currentUser == null) return null;
+    return await _firebaseUserToUser(currentUser);
+  }
 
   @override
-  Future<User> logout() {}
+  Future<bool> isAnonymous() async {
+    final currentUser = await _firebaseAuth.currentUser();
+    return currentUser.isAnonymous;
+  }
 }
