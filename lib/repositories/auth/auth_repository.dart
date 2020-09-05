@@ -48,13 +48,18 @@ class AuthRepository extends BaseAuthRepository {
   }
 
   @override
+  Future<User> loginWithEmailAndPassword(
+      {@required String email, @required String password}) async {
+    final authResult = await _firebaseAuth.signInWithEmailAndPassword(
+        email: email, password: password);
+    return await _firebaseUserToUser(authResult.user);
+  }
+
+  @override
   Future<User> getCurrentUser() {}
 
   @override
   Future<bool> isAnonymous() {}
-
-  @override
-  Future<User> loginWithEmailAndPassword({String email, String password}) {}
 
   @override
   Future<User> logout() {}
