@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_bloc_note_app/config/paths.dart';
 import 'package:flutter_bloc_note_app/entity/entities.dart';
 import 'package:flutter_bloc_note_app/models/user_model.dart';
 import 'package:flutter_bloc_note_app/repositories/repositories.dart';
@@ -16,7 +17,7 @@ class AuthRepository extends BaseAuthRepository {
 
   Future<User> _firebaseUserToUser(FirebaseUser user) async {
     DocumentSnapshot userDoc =
-        await _firestore.collection('users').document(user.uid).get();
+        await _firestore.collection(Paths.users).document(user.uid).get();
     if (userDoc.exists) {
       User user = User.fromEntity(UserEntity.fromSnapshot(userDoc));
       return user;
