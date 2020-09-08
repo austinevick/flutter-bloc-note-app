@@ -6,7 +6,10 @@ import 'package:flutter_bloc_note_app/widgets/notes_grid.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthBloc, AuthState>(
+    return BlocConsumer<AuthBloc, AuthState>(
+      listener: (context, state) {
+        context.bloc<NotesBloc>()..add(FetchNotes());
+      },
       builder: (context, authState) {
         return Scaffold(
           body: BlocBuilder<NotesBloc, NotesState>(
