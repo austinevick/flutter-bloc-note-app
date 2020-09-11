@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_note_app/blocs/auth/auth_bloc.dart';
+import 'package:flutter_bloc_note_app/blocs/blocs.dart';
 import 'package:flutter_bloc_note_app/repositories/auth/auth_repository.dart';
 import 'package:flutter_bloc_note_app/repositories/notes/notes_repository.dart';
 import 'package:flutter_bloc_note_app/screens/screens.dart';
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider<ThemesBloc>(create: (_) => ThemesBloc()..add(LoadTheme())),
         BlocProvider<AuthBloc>(
             create: (_) => AuthBloc(
                   authRepository: AuthRepository(),
@@ -28,14 +30,15 @@ class MyApp extends StatelessWidget {
               notesRepository: NotesRepository()),
         )
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primaryColor: Colors.white,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        home: HomeScreen(),
+      child: BlocBuilder<ThemesBloc, ThemeState>(
+        builder: (context, state) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Flutter Demo',
+            theme: state.themeData,
+            home: HomeScreen(),
+          );
+        },
       ),
     );
   }
