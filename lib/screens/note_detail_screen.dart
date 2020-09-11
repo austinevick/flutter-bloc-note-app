@@ -4,6 +4,7 @@ import 'package:flutter_bloc_note_app/blocs/blocs.dart';
 
 import 'package:flutter_bloc_note_app/models/models.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc_note_app/widgets/color_picker.dart';
 
 class NoteDetailScreen extends StatefulWidget {
   final Note note;
@@ -19,6 +20,13 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
   final _contentFocusNode = FocusNode();
   final _contentController = TextEditingController();
   bool get _isEditing => widget.note != null;
+  final List<HexColor> _colors = [
+    HexColor('#E74C3C'),
+    HexColor('#3498DB'),
+    HexColor('#27AE60'),
+    HexColor('#F6C924'),
+    HexColor('#8E44AD'),
+  ];
   @override
   void initState() {
     super.initState();
@@ -67,30 +75,32 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
         },
         builder: (context, state) {
           return Scaffold(
-              appBar: AppBar(
-                actions: [buildAction()],
-                elevation: 0.0,
+            appBar: AppBar(
+              actions: [buildAction()],
+              elevation: 0.0,
+            ),
+            body: SingleChildScrollView(
+              padding: const EdgeInsets.only(
+                left: 24.0,
+                right: 24.0,
+                top: 10.0,
+                bottom: 80.0,
               ),
-              body: SingleChildScrollView(
-                padding: const EdgeInsets.only(
-                  left: 24.0,
-                  right: 24.0,
-                  top: 10.0,
-                  bottom: 80.0,
-                ),
-                child: TextField(
-                  focusNode: _contentFocusNode,
-                  controller: _contentController,
-                  style: const TextStyle(fontSize: 18, height: 1.2),
-                  decoration: const InputDecoration.collapsed(
-                      hintText: 'Write about something :)'),
-                  maxLines: null,
-                  textCapitalization: TextCapitalization.sentences,
-                  onChanged: (value) => context
-                      .bloc<NotesDetailBloc>()
-                      .add(NoteContentUpdated(content: value)),
-                ),
-              ));
+              child: TextField(
+                focusNode: _contentFocusNode,
+                controller: _contentController,
+                style: const TextStyle(fontSize: 18, height: 1.2),
+                decoration: const InputDecoration.collapsed(
+                    hintText: 'Write about something :)'),
+                maxLines: null,
+                textCapitalization: TextCapitalization.sentences,
+                onChanged: (value) => context
+                    .bloc<NotesDetailBloc>()
+                    .add(NoteContentUpdated(content: value)),
+              ),
+            ),
+            bottomSheet: ColorPicker(state: state, color: _colors),
+          );
         },
       ),
     );

@@ -25,6 +25,7 @@ class NotesGrid extends StatelessWidget {
             return GestureDetector(
               onTap: () => onTap(note),
               child: Card(
+                color: note.color,
                 elevation: 4,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -34,20 +35,26 @@ class NotesGrid extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Flexible(
-                      child: Text(
-                        note.content,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16.0,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          note.content,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 16.0,
+                          ),
                         ),
                       ),
                     ),
-                    Text(
-                      DateFormat.yMd().add_jm().format(note.timestamp),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 12.0,
-                        fontWeight: FontWeight.w600,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        DateFormat.yMd().add_jm().format(note.timestamp),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12.0,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ],
