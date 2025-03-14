@@ -7,17 +7,23 @@ import 'package:flutter_bloc_demo/ui/home_screen.dart';
 
 import '../authbloc/auth_state.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class AuthScreen extends StatefulWidget {
+  const AuthScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<AuthScreen> createState() => _AuthScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _AuthScreenState extends State<AuthScreen> {
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    BlocProvider.of<AuthBloc>(context).add(OnSelectedIndexPressed(0));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

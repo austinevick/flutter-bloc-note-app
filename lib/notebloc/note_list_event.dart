@@ -40,3 +40,10 @@ class UpdateNote extends NoteListEvent {
   List<Object?> get props => [note];
 }
 
+class SearchNote extends NoteListEvent {
+  final String query;
+
+  SearchNote(this.query);
+  @override
+  List<Object?> get props => [query];
+}

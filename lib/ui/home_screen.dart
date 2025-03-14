@@ -4,6 +4,7 @@ import 'package:flutter_bloc_demo/notebloc/note_list_bloc.dart';
 import 'package:flutter_bloc_demo/notebloc/note_list_state.dart';
 import 'package:flutter_bloc_demo/common/utils.dart';
 import 'package:flutter_bloc_demo/ui/edit_note_screen.dart';
+import 'package:flutter_bloc_demo/ui/search_screen.dart';
 import 'package:flutter_bloc_demo/widget/note_card.dart';
 
 import '../notebloc/note_list_event.dart';
@@ -24,11 +25,20 @@ class HomeScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => ArchiveNoteScreen()
-              )),
+            onPressed:
+                () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => ArchiveNoteScreen()),
+                ),
             iconSize: 28,
             icon: Icon(Icons.archive_outlined),
+          ),
+          IconButton(
+            onPressed:
+                () => Navigator.of(
+                  context,
+                ).push(MaterialPageRoute(builder: (context) => SearchScreen())),
+            iconSize: 28,
+            icon: Icon(Icons.search),
           ),
         ],
       ),
@@ -38,17 +48,16 @@ class HomeScreen extends StatelessWidget {
             return Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
               child: ListView.builder(
-                itemCount:
-                     state.notes.length,
-                itemBuilder:
-                    (context, i) => NoteCard(data: state.notes[i]),
+                itemCount: state.notes.length,
+                itemBuilder: (context, i) => NoteCard(data: state.notes[i]),
               ),
             );
           }
           if (state is ErrorState) {
             return MaterialButton(
-                onPressed: ()=> context.read<NoteListBloc>().add(GetNotes()),
-                child: Center(child: Text(state.message)));
+              onPressed: () => context.read<NoteListBloc>().add(GetNotes()),
+              child: Center(child: Text(state.message)),
+            );
           }
           return Center(child: CircularProgressIndicator());
         },

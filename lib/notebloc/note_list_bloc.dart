@@ -16,6 +16,18 @@ class NoteListBloc extends Bloc<NoteListEvent, NoteListState> {
     on<AddNote>(addNote);
     on<UpdateNote>(updateNote);
     on<DeleteNote>(deleteNote);
+    on<SearchNote>(searchNote);
+  }
+
+  FutureOr<void> searchNote(
+    SearchNote event,
+    Emitter<NoteListState> emit,
+  ) async {
+    try {
+      final response = await noteRepository.getNotes();
+    } catch (e) {
+      emit(ErrorState(somethingWentWrong));
+    }
   }
 
   FutureOr<void> getNotes(GetNotes event, Emitter<NoteListState> emit) async {
