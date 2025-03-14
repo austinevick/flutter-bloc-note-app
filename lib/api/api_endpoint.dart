@@ -7,4 +7,5 @@ class ApiEndpoint {
   static const register = "${_baseUrl}register";
   static const note = "${_baseUrl}note";
   static const archiveNotes = "${_baseUrl}note/archived";
+  static const searchNotes = "${_baseUrl}note/search?keyword=";
 }

@@ -24,6 +24,14 @@ class NoteRepository {
     return AuthResponseModel.fromJson(json);
   }
 
+  Future<NoteResponseModel> searchNotes(String query) async {
+    final response = await HttpClient.getRequest(
+      "${ApiEndpoint.searchNotes}$query",
+    );
+    final json = jsonDecode(response.body);
+    return NoteResponseModel.fromJson(json);
+  }
+
   Future<NoteResponseModel> getNotes() async {
     final response = await HttpClient.getRequest(ApiEndpoint.note);
     final json = jsonDecode(response.body);

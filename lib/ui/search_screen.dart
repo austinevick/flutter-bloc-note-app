@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_demo/notebloc/note_list_bloc.dart';
+import 'package:flutter_bloc_demo/notebloc/note_list_event.dart';
 import 'package:flutter_bloc_demo/notebloc/note_list_state.dart';
 
 import '../widget/note_card.dart';
@@ -14,6 +17,22 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   final searchTerm = TextEditingController();
+
+  Timer? debounce;
+
+  void onSearchChanged(String query) {
+    if (debounce?.isActive ?? false) debounce?.cancel();
+    debounce = Timer(const Duration(milliseconds: 500), () {
+      context.read<NoteListBloc>().add(SearchNote(query));
+    });
+  }
+
+  @override
+  void dispose() {
+    debounce!.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<NoteListBloc, NoteListState>(
@@ -23,6 +42,7 @@ class _SearchScreenState extends State<SearchScreen> {
             title: TextFormField(
               controller: searchTerm,
               autofocus: true,
+              onChanged: onSearchChanged,
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
               decoration: InputDecoration(
                 enabledBorder: InputBorder.none,
