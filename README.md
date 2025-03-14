@@ -1,16 +1,15 @@
-# flutter_bloc_demo
+# Flutter bloc note keeper
 
-A new Flutter project.
+This project is a beginners approach to mastering Bloc state management in Flutter.
 
-## Getting Started
+## Features
+- User authentication
+- Full CRUD operation
+- Nodejs backend
 
-This project is a starting point for a Flutter application.
+# How to use
+- [Clone the api](https://github.com/austinevick/Note-app-api)
+- Run npm install
+- run npm start
+- run this on your terminal to configure the port number on your adb device: adb reverse tcp:3000 tcp:3000
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
