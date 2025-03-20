@@ -10,8 +10,20 @@ import 'package:flutter_bloc_demo/widget/note_card.dart';
 import '../notebloc/note_list_event.dart';
 import 'archive_note_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+  @override
+  void initState() {
+    BlocProvider.of<NoteListBloc>(context).add(GetNotes());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -53,7 +53,6 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
           body: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16),
-
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: switch (state) {

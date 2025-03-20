@@ -57,9 +57,7 @@ class NoteCard extends StatelessWidget {
                     ),
                   ),
                   IconButton(
-                    onPressed: () {
-                      provider.add(DeleteNote(data.id));
-                    },
+                    onPressed: () => provider.add(DeleteNote(data.id)),
                     icon: Icon(Icons.delete),
                   ),
                 ],

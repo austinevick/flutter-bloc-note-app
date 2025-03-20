@@ -50,7 +50,7 @@ class NoteRepository {
       body: note.toMap(),
     );
     final json = jsonDecode(response.body);
-    return NoteResponseModel.fromMap(json);
+    return NoteResponseModel.fromJson(json);
   }
 
   Future<NoteResponseModel> updateNote(NoteModel note) async {
@@ -60,12 +60,12 @@ class NoteRepository {
     );
     logger.d(note.toString());
     final json = jsonDecode(response.body);
-    return NoteResponseModel.fromMap(json);
+    return NoteResponseModel.fromJson(json);
   }
 
   Future<NoteResponseModel> deleteNote(String id) async {
     final response = await HttpClient.deleteRequest("${ApiEndpoint.note}/$id");
     final json = jsonDecode(response.body);
-    return NoteResponseModel.fromMap(json);
+    return NoteResponseModel.fromJson(json);
   }
 }
